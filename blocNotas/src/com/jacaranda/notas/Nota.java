@@ -1,17 +1,18 @@
-package com.jacaranda.blocNotas;
+package com.jacaranda.notas;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Nota implements Comparable<Nota> {
-	protected static int codigoSiguiente;
-	protected int codigo; 
-	protected String texto;
-	protected LocalDateTime fechaCreacion;
-	protected LocalDateTime fechaUltimaModificacion;
+	private static int codigoSiguiente = 1;
+	private int codigo; 
+	private String texto;
+	private LocalDateTime fechaCreacion;
+	private LocalDateTime fechaUltimaModificacion;
 	
 	public Nota(String texto) {
-		this.codigo = getCodigo();
+		this.codigo = codigoSiguiente;
+		codigoSiguiente = codigoSiguiente + 1;
 		this.texto = texto;
 		this.fechaCreacion = getFechaCreacion();
 		this.fechaUltimaModificacion=getFechaModificacion();
@@ -92,12 +93,18 @@ public class Nota implements Comparable<Nota> {
 	}
 
 	@Override
-	public int compareTo(Nota o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Nota other) {
+		//para comparar la fecha de creación y el codigo. Si el resultado es negativo entonces nota iría antes que other 
+		//si es positivo other iría antes que this y si es 0 se verificaría los codigos y el resultado seria la diferencia de los mismos ya sea positiva o negativa  
+		int result; 
+		
+		if (this.getFechaCreacion().isBefore(other.getFechaCreacion())) {
+			result = -1;
+		} else if (this.getFechaCreacion().isAfter(other.getFechaCreacion())) {
+			result = 1;
+		} else {
+			result = this.getCodigo() - other.getCodigo();
+		}		
+		return result;
 	}
-	
-	
-	
-
 }
