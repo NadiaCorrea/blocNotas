@@ -94,17 +94,25 @@ public class Nota implements Comparable<Nota> {
 
 	@Override
 	public int compareTo(Nota other) {
-		//para comparar la fecha de creación y el codigo. Si el resultado es negativo entonces nota iría antes que other 
-		//si es positivo other iría antes que this y si es 0 se verificaría los codigos y el resultado seria la diferencia de los mismos ya sea positiva o negativa  
+		//para comparar la fecha de creaciï¿½n y el codigo. Si el resultado es negativo entonces nota irï¿½a antes que other 
+		//si es positivo other irï¿½a antes que this y si es 0 se verificarï¿½a los codigos y el resultado seria la diferencia de los mismos ya sea positiva o negativa 
+		
+		//cambio: se verifica primero el nombre y luego la fecha 
 		int result; 
 		
-		if (this.getFechaCreacion().isBefore(other.getFechaCreacion())) {
-			result = -1;
-		} else if (this.getFechaCreacion().isAfter(other.getFechaCreacion())) {
-			result = 1;
-		} else {
-			result = this.getCodigo() - other.getCodigo();
-		}		
+		result = this.getTexto().compareToIgnoreCase(other.getTexto());
+		
+		if(result == 0) {
+			result = this.fechaCreacion.compareTo(other.fechaCreacion);
+		} 
+		
+//		if (this.getFechaCreacion().isBefore(other.getFechaCreacion())) {
+//			result = -1;
+//		} else if (this.getFechaCreacion().isAfter(other.getFechaCreacion())) {
+//			result = 1;
+//		} else {
+//			result = this.getCodigo() - other.getCodigo();
+//		}		
 		return result;
 	}
 }
